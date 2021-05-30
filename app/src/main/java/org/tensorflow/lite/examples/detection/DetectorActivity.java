@@ -16,6 +16,7 @@
 
 package org.tensorflow.lite.examples.detection;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
@@ -26,10 +27,13 @@ import android.graphics.Paint.Style;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.media.ImageReader.OnImageAvailableListener;
+import android.net.Uri;
 import android.os.SystemClock;
 import android.util.Log;
 import android.util.Size;
 import android.util.TypedValue;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -57,7 +61,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     private static final Logger LOGGER = new Logger();
 
     private static final DetectorMode MODE = DetectorMode.TF_OD_API;
-    private static final float MINIMUM_CONFIDENCE_TF_OD_API = 0.5f;
+    private static final float MINIMUM_CONFIDENCE_TF_OD_API = 0.6f;
     private static final boolean MAINTAIN_ASPECT = true;
     private static final Size DESIRED_PREVIEW_SIZE = new Size(640, 640);
     private static final boolean SAVE_PREVIEW_BITMAP = false;
@@ -83,6 +87,27 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
     private BorderedText borderedText;
     public static Set<String> set = new HashSet<>();
+
+    public void onButton2Clicked(View view) {
+        String urls = "https://www.10000recipe.com/recipe/list.html?q=";
+        if (foodStrings.size() == 0){
+
+        }
+        else{
+            for(int i=0; i<foodStrings.size();i++){
+                urls += foodStrings.get(i);
+                if (i+1 == foodStrings.size()){
+                    continue;
+                }
+                else{
+                    urls+="+";
+                }
+            }
+        }
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urls));
+        startActivity(intent);
+    }
 
     @Override
     public void onPreviewSizeChosen(final Size size, final int rotation) {
@@ -149,7 +174,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
         // Get UI information before delegating to background
         final int modelIndex = modelView.getCheckedItemPosition();
         final int deviceIndex = deviceView.getCheckedItemPosition();
-        String threads = threadsTextView.getText().toString().trim();
+        String threads = "5";//threadsTextView.getText().toString().trim();
         final int numThreads = Integer.parseInt(threads);
 
         handler.post(() -> {
@@ -288,28 +313,31 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
                         runOnUiThread(
                                 new Runnable() {
                                     @Override
-                                    public void run() {//previewWidth + "x" + previewHeight
+                                    public void run() {
                                         try {
-                                            String tmp = "";
+                                            ArrayAdapter foodadapter = (ArrayAdapter) foodView.getAdapter();
                                             for (final MultiBoxTracker.TrackedRecognition recognition : tracker.trackedObjects) {
                                                 set.add(recognition.title);
-
+                                                if (!foodStrings.contains(recognition.title)) {
+                                                    foodStrings.add(recognition.title);
+                                                }
                                             }
-                                            Iterator<String> iterator = set.iterator();
-                                            while(iterator.hasNext()){
-                                                tmp = tmp + iterator.next();
-                                            }
-                                            showFrameInfo(tmp);
+                                            foodadapter.notifyDataSetChanged();
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         }
+
+
                                         showCropInfo(cropCopyBitmap.getWidth() + "x" + cropCopyBitmap.getHeight());
                                         showInference(lastProcessingTimeMs + "ms");
+
+                                        //showFrameInfo(previewWidth + "x" + previewHeight);
                                     }
                                 });
                     }
                 });
     }
+
 
     @Override
     protected int getLayoutId() {
@@ -336,4 +364,5 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     protected void setNumThreads(final int numThreads) {
         runInBackground(() -> detector.setNumThreads(numThreads));
     }
+
 }

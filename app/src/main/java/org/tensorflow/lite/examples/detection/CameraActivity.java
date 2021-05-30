@@ -98,12 +98,14 @@ public abstract class CameraActivity extends AppCompatActivity
   protected ListView deviceView;
   protected TextView threadsTextView;
   protected ListView modelView;
+  public ListView foodView;
   /** Current indices of device and model. */
   int currentDevice = -1;
   int currentModel = -1;
   int currentNumThreads = -1;
 
   ArrayList<String> deviceStrings = new ArrayList<String>();
+  ArrayList<String> foodStrings = new ArrayList<String>();
 
   @Override
   protected void onCreate(final Bundle savedInstanceState) {
@@ -115,17 +117,31 @@ public abstract class CameraActivity extends AppCompatActivity
     Toolbar toolbar = findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
     getSupportActionBar().setDisplayShowTitleEnabled(false);
+    setNumThreads(5);
 
     if (hasPermission()) {
       setFragment();
     } else {
       requestPermission();
     }
+    //여기가 음식리스트
+    foodView = findViewById(R.id.food_list);
+    ArrayAdapter<String> foodAdapter =
+            new ArrayAdapter<>(
+                    CameraActivity.this , R.layout.foodview_row, R.id.food_row_text, foodStrings);
+    foodView.setAdapter(foodAdapter);
+    foodView.setOnItemClickListener(
+            new AdapterView.OnItemClickListener() {
+              @Override
+              public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-    threadsTextView = findViewById(R.id.threads);
-    currentNumThreads = Integer.parseInt(threadsTextView.getText().toString().trim());
-    plusImageView = findViewById(R.id.plus);
-    minusImageView = findViewById(R.id.minus);
+              }
+            });
+
+    //threadsTextView = findViewById(R.id.threads);
+    currentNumThreads = Integer.parseInt("5");
+    //plusImageView = findViewById(R.id.plus);
+    //minusImageView = findViewById(R.id.minus);
     deviceView = findViewById(R.id.device_list);
     deviceStrings.add("CPU");
     deviceStrings.add("GPU");
@@ -218,8 +234,8 @@ public abstract class CameraActivity extends AppCompatActivity
     cropValueTextView = findViewById(R.id.crop_info);
     inferenceTimeTextView = findViewById(R.id.inference_info);
 
-    plusImageView.setOnClickListener(this);
-    minusImageView.setOnClickListener(this);
+    //plusImageView.setOnClickListener(this);
+    //minusImageView.setOnClickListener(this);
   }
 
 
@@ -578,6 +594,7 @@ public abstract class CameraActivity extends AppCompatActivity
 
   @Override
   public void onClick(View v) {
+    /*
     if (v.getId() == R.id.plus) {
       String threads = threadsTextView.getText().toString().trim();
       int numThreads = Integer.parseInt(threads);
@@ -593,8 +610,9 @@ public abstract class CameraActivity extends AppCompatActivity
       }
       numThreads--;
       threadsTextView.setText(String.valueOf(numThreads));
+
       setNumThreads(numThreads);
-    }
+    }*/
   }
 
   protected void showFrameInfo(String frameInfo) throws Exception{

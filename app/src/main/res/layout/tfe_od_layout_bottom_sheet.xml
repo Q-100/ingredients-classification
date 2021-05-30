@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_sheet_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -29,141 +30,92 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <Button
+        android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:onClick="onButton2Clicked"
+        android:text="추천 레시피 확인하기"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
-        <TextView
-            android:id="@+id/frame"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Frame"
-            android:textColor="@android:color/black" />
-
-        <TextView
-            android:id="@+id/frame_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="right"
-            android:text="640*480"
-            android:textColor="@android:color/black" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/crop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Crop"
-            android:textColor="@android:color/black" />
-
-        <TextView
-            android:id="@+id/crop_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="right"
-            android:text="640*480"
-            android:textColor="@android:color/black" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/inference"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Inference Time"
-            android:textColor="@android:color/black" />
-
-        <TextView
-            android:id="@+id/inference_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="right"
-            android:text="640*480"
-            android:textColor="@android:color/black" />
-    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginTop="10dp"
         android:background="@android:color/darker_gray" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:visibility="visible">
-
-        <TextView
-            android:layout_width="wrap_content"
+    <!--
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Threads"
-            android:textColor="@android:color/black" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/rectangle"
-            android:gravity="center"
             android:orientation="horizontal"
-            android:padding="4dp">
-
-            <ImageView
-                android:id="@+id/minus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_remove" />
+            android:visibility="visible">
 
             <TextView
-                android:id="@+id/threads"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:text="1"
-                android:textColor="@android:color/black"
-                android:textSize="14sp" />
+                android:layout_marginTop="10dp"
+                android:text="Threads"
+                android:textColor="@android:color/black" />
 
-            <ImageView
-                android:id="@+id/plus"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_add" />
-        </LinearLayout>
-    </RelativeLayout>
+                android:layout_alignParentRight="true"
+                android:background="@drawable/rectangle"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="4dp">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginTop="10dp"
-        android:background="@android:color/darker_gray" />
+                <ImageView
+                    android:id="@+id/minus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_remove" />
+
+                <TextView
+                    android:id="@+id/threads"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="1"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/plus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_add" />
+            </LinearLayout>
+        </RelativeLayout>
+    -->
 
     <!-- TODO(b/112541284): Unhide when new NNAPI delegate is used. -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="인식목록" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
+
+        <ListView
+            android:id="@+id/food_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:visibility="invisible">
 
         <ListView
             android:id="@+id/device_list"
@@ -181,5 +133,77 @@
         android:layout_height="1px"
         android:layout_marginTop="10dp"
         android:background="@android:color/darker_gray" />
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:visibility="invisible">
+
+        <TextView
+            android:id="@+id/frame"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:text="frame"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:gravity="right"
+            android:id="@+id/frame_info"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:text="640*480"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:visibility="invisible">
+
+        <TextView
+            android:id="@+id/crop"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:text="Crop"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:gravity="right"
+            android:id="@+id/crop_info"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:text="640*480"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:visibility="invisible">
+
+        <TextView
+            android:id="@+id/inference"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:text="Inference Time"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:gravity="right"
+            android:id="@+id/inference_info"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:text="640*480"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
 
 </LinearLayout>
