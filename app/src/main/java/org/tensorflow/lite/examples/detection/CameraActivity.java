@@ -597,7 +597,7 @@ public abstract class CameraActivity extends AppCompatActivity
     }
   }
 
-  protected void showFrameInfo(String frameInfo) {
+  protected void showFrameInfo(String frameInfo) throws Exception{
     frameValueTextView.setText(frameInfo);
   }
 

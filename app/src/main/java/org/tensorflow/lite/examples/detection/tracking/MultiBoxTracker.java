@@ -30,6 +30,8 @@ import android.util.TypedValue;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+
+import org.tensorflow.lite.examples.detection.DetectorActivity;
 import org.tensorflow.lite.examples.detection.env.BorderedText;
 import org.tensorflow.lite.examples.detection.env.ImageUtils;
 import org.tensorflow.lite.examples.detection.env.Logger;
@@ -59,7 +61,7 @@ public class MultiBoxTracker {
   final List<Pair<Float, RectF>> screenRects = new LinkedList<Pair<Float, RectF>>();
   private final Logger logger = new Logger();
   private final Queue<Integer> availableColors = new LinkedList<Integer>();
-  private final List<TrackedRecognition> trackedObjects = new LinkedList<TrackedRecognition>();
+  public final List<TrackedRecognition> trackedObjects = new LinkedList<TrackedRecognition>();
   private final Paint boxPaint = new Paint();
   private final float textSizePx;
   private final BorderedText borderedText;
@@ -143,7 +145,7 @@ public class MultiBoxTracker {
       float cornerSize = Math.min(trackedPos.width(), trackedPos.height()) / 8.0f;
       canvas.drawRoundRect(trackedPos, cornerSize, cornerSize, boxPaint);
 
-      final String labelString =
+      String labelString =
               !TextUtils.isEmpty(recognition.title)
                       ? String.format("%s %.2f", recognition.title, (100 * recognition.detectionConfidence))
                       : String.format("%.2f", (100 * recognition.detectionConfidence));
@@ -203,10 +205,10 @@ public class MultiBoxTracker {
     }
   }
 
-  private static class TrackedRecognition {
+  public static class TrackedRecognition {
     RectF location;
     float detectionConfidence;
     int color;
-    String title;
+    public String title;
   }
 }

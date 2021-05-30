@@ -33,8 +33,11 @@ import android.util.TypedValue;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.tensorflow.lite.examples.detection.customview.OverlayView;
 import org.tensorflow.lite.examples.detection.customview.OverlayView.DrawCallback;
@@ -54,7 +57,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     private static final Logger LOGGER = new Logger();
 
     private static final DetectorMode MODE = DetectorMode.TF_OD_API;
-    private static final float MINIMUM_CONFIDENCE_TF_OD_API = 0.3f;
+    private static final float MINIMUM_CONFIDENCE_TF_OD_API = 0.5f;
     private static final boolean MAINTAIN_ASPECT = true;
     private static final Size DESIRED_PREVIEW_SIZE = new Size(640, 640);
     private static final boolean SAVE_PREVIEW_BITMAP = false;
@@ -79,6 +82,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     private MultiBoxTracker tracker;
 
     private BorderedText borderedText;
+    public static Set<String> set = new HashSet<>();
 
     @Override
     public void onPreviewSizeChosen(final Size size, final int rotation) {
@@ -177,8 +181,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
                 if (detector == null) {
                     return;
                 }
-            }
-            catch(IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
                 LOGGER.e(e, "Exception in updateActiveModel()");
                 Toast toast =
@@ -253,7 +256,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
                         final Paint paint = new Paint();
                         paint.setColor(Color.RED);
                         paint.setStyle(Style.STROKE);
-                        paint.setStrokeWidth(2.0f);
+                        paint.setStrokeWidth(1.0f);
 
                         float minimumConfidence = MINIMUM_CONFIDENCE_TF_OD_API;
                         switch (MODE) {
@@ -285,8 +288,21 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
                         runOnUiThread(
                                 new Runnable() {
                                     @Override
-                                    public void run() {
-                                        showFrameInfo(previewWidth + "x" + previewHeight);
+                                    public void run() {//previewWidth + "x" + previewHeight
+                                        try {
+                                            String tmp = "";
+                                            for (final MultiBoxTracker.TrackedRecognition recognition : tracker.trackedObjects) {
+                                                set.add(recognition.title);
+
+                                            }
+                                            Iterator<String> iterator = set.iterator();
+                                            while(iterator.hasNext()){
+                                                tmp = tmp + iterator.next();
+                                            }
+                                            showFrameInfo(tmp);
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
                                         showCropInfo(cropCopyBitmap.getWidth() + "x" + cropCopyBitmap.getHeight());
                                         showInference(lastProcessingTimeMs + "ms");
                                     }
