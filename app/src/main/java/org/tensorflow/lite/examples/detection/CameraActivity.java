@@ -137,6 +137,17 @@ public abstract class CameraActivity extends AppCompatActivity
 
               }
             });
+    foodView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+      @Override
+      public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                     int position, long id) {
+        foodStrings.remove(position);
+        foodAdapter.notifyDataSetChanged();
+        // 이벤트 처리 종료 , 여기만 리스너 적용시키고 싶으면 true , 아니면 false
+        return true;
+      }
+    });
 
     //threadsTextView = findViewById(R.id.threads);
     currentNumThreads = Integer.parseInt("5");

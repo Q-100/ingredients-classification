@@ -61,7 +61,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     private static final Logger LOGGER = new Logger();
 
     private static final DetectorMode MODE = DetectorMode.TF_OD_API;
-    private static final float MINIMUM_CONFIDENCE_TF_OD_API = 0.6f;
+    private static final float MINIMUM_CONFIDENCE_TF_OD_API = 0.65f;
     private static final boolean MAINTAIN_ASPECT = true;
     private static final Size DESIRED_PREVIEW_SIZE = new Size(640, 640);
     private static final boolean SAVE_PREVIEW_BITMAP = false;
@@ -91,6 +91,11 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     public void onButton2Clicked(View view) {
         String urls = "https://www.10000recipe.com/recipe/list.html?q=";
         if (foodStrings.size() == 0){
+            Toast.makeText(
+                    this,
+                    "음식을 먼저 인식시켜주세요",
+                    Toast.LENGTH_LONG)
+                    .show();
 
         }
         else{
@@ -104,10 +109,13 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
                 }
             }
         }
-
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urls));
-        startActivity(intent);
+        if (foodStrings.size() != 0) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urls));
+            startActivity(intent);
+        }
     }
+
+
 
     @Override
     public void onPreviewSizeChosen(final Size size, final int rotation) {
@@ -333,10 +341,12 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
                                         //showFrameInfo(previewWidth + "x" + previewHeight);
                                     }
+
                                 });
                     }
                 });
     }
+
 
 
     @Override
