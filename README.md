@@ -2,10 +2,9 @@
 상명대학교 SW-PBL 프로젝트 <br />
 - email address : opea5954@gmail.com <br />
 - Demo Video : https://youtu.be/o9u2amtgCto <br />
-![image](https://user-images.githubusercontent.com/68915940/120199843-9eb04a80-c25e-11eb-8be1-46ab1cbaa8b4.png)
-![image](https://user-images.githubusercontent.com/68915940/120199859-a243d180-c25e-11eb-94af-69c17de6ab8b.png)
-![image](https://user-images.githubusercontent.com/68915940/120199873-a53ec200-c25e-11eb-9bcf-d6f2fc9eee2c.png)
-![image](https://user-images.githubusercontent.com/68915940/120199891-aa037600-c25e-11eb-8318-cb4fdd807f6c.png)
+![image](https://user-images.githubusercontent.com/68915940/120200196-06ff2c00-c25f-11eb-87b8-62c5639d7649.png)
+![image](https://user-images.githubusercontent.com/68915940/120200207-09618600-c25f-11eb-903f-284e85cecf99.png)
+![image](https://user-images.githubusercontent.com/68915940/120200219-0b2b4980-c25f-11eb-8dc0-6fb6f2c3a34e.png)
 
 ## Introduction
 Yolov5와 Tensorflow Lite를 기반으로한 레시피 추천 어플리케이션
@@ -22,6 +21,7 @@ Yolov5와 Tensorflow Lite를 기반으로한 레시피 추천 어플리케이션
 ## Food ingredients dataset
 1. Class : 11
     -> 마늘, 감자, 달걀, 양파, 닭고기, 돼지고기, 대파, 소고기, 김치, 햄, 콩나물
+    ![image](https://user-images.githubusercontent.com/68915940/120200231-0e263a00-c25f-11eb-8b11-cf887a5f492e.png)
 2. Images : 905
 3. TRAIN/TEST SPLIT(100%) 
     -> Train : 631(70%)
