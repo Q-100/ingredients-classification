@@ -30,10 +30,12 @@ import android.media.Image;
 import android.media.Image.Plane;
 import android.media.ImageReader;
 import android.media.ImageReader.OnImageAvailableListener;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.os.Message;
 import android.os.Trace;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -58,6 +60,9 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.tensorflow.lite.examples.detection.env.ImageUtils;
 import org.tensorflow.lite.examples.detection.env.Logger;
 
@@ -103,6 +108,8 @@ public abstract class CameraActivity extends AppCompatActivity
   int currentDevice = -1;
   int currentModel = -1;
   int currentNumThreads = -1;
+  TextView textView;
+  String nums;
 
   ArrayList<String> deviceStrings = new ArrayList<String>();
   ArrayList<String> foodStrings = new ArrayList<String>();
@@ -125,18 +132,21 @@ public abstract class CameraActivity extends AppCompatActivity
       requestPermission();
     }
     //여기가 음식리스트
+    final Bundle bundle = new Bundle();
     foodView = findViewById(R.id.food_list);
+    textView = (TextView) findViewById(R.id.rec_food);
+
     ArrayAdapter<String> foodAdapter =
             new ArrayAdapter<>(
                     CameraActivity.this , R.layout.foodview_row, R.id.food_row_text, foodStrings);
     foodView.setAdapter(foodAdapter);
-    foodView.setOnItemClickListener(
-            new AdapterView.OnItemClickListener() {
-              @Override
-              public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-              }
-            });
+//    foodView.setOnItemClickListener(
+//            new AdapterView.OnItemClickListener() {
+//              @Override
+//              public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//              }
+//            });
     foodView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
       @Override
@@ -148,6 +158,10 @@ public abstract class CameraActivity extends AppCompatActivity
         return true;
       }
     });
+
+
+
+
 
     //threadsTextView = findViewById(R.id.threads);
     currentNumThreads = Integer.parseInt("5");

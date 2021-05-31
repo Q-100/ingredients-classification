@@ -29,13 +29,17 @@
             android:src="@drawable/icn_chevron_up" />
 
     </LinearLayout>
-
+    <TextView
+        android:id="@+id/rec_food"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="현재 추천 요리 : " />
     <Button
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onButton2Clicked"
-        android:text="추천 레시피 확인하기"
+        android:text="추천 요리 레시피 확인하기"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
@@ -95,10 +99,14 @@
     -->
 
     <!-- TODO(b/112541284): Unhide when new NNAPI delegate is used. -->
+
+
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="인식목록" />
+        android:text="인식한 식재료" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -133,75 +141,76 @@
         android:layout_height="1px"
         android:layout_marginTop="10dp"
         android:background="@android:color/darker_gray" />
+
     <LinearLayout
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:visibility="invisible">
 
         <TextView
             android:id="@+id/frame"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
             android:text="frame"
             android:textColor="@android:color/black" />
 
         <TextView
-            android:gravity="right"
             android:id="@+id/frame_info"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
+            android:gravity="right"
             android:text="640*480"
             android:textColor="@android:color/black" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:visibility="invisible">
 
         <TextView
             android:id="@+id/crop"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
             android:text="Crop"
             android:textColor="@android:color/black" />
 
         <TextView
-            android:gravity="right"
             android:id="@+id/crop_info"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
+            android:gravity="right"
             android:text="640*480"
             android:textColor="@android:color/black" />
     </LinearLayout>
 
 
     <LinearLayout
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:visibility="invisible">
 
         <TextView
             android:id="@+id/inference"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
             android:text="Inference Time"
             android:textColor="@android:color/black" />
 
         <TextView
-            android:gravity="right"
             android:id="@+id/inference_info"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
+            android:gravity="right"
             android:text="640*480"
             android:textColor="@android:color/black" />
     </LinearLayout>

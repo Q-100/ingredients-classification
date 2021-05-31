@@ -28,6 +28,9 @@ import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.media.ImageReader.OnImageAvailableListener;
 import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
 import android.util.Size;
@@ -35,6 +38,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
+import android.os.AsyncTask;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -43,6 +47,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.tensorflow.lite.examples.detection.customview.OverlayView;
 import org.tensorflow.lite.examples.detection.customview.OverlayView.DrawCallback;
 import org.tensorflow.lite.examples.detection.env.BorderedText;
@@ -88,33 +96,9 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     private BorderedText borderedText;
     public static Set<String> set = new HashSet<>();
 
-    public void onButton2Clicked(View view) {
-        String urls = "https://www.10000recipe.com/recipe/list.html?q=";
-        if (foodStrings.size() == 0){
-            Toast.makeText(
-                    this,
-                    "음식을 먼저 인식시켜주세요",
-                    Toast.LENGTH_LONG)
-                    .show();
-
-        }
-        else{
-            for(int i=0; i<foodStrings.size();i++){
-                urls += foodStrings.get(i);
-                if (i+1 == foodStrings.size()){
-                    continue;
-                }
-                else{
-                    urls+="+";
-                }
-            }
-        }
-        if (foodStrings.size() != 0) {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urls));
-            startActivity(intent);
-        }
-    }
-
+    private String htmlPageUrl = "https://www.daum.net/";
+    private String htmlContentInStringFormat;
+    String link;
 
 
     @Override
@@ -324,6 +308,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
                                     public void run() {
                                         try {
                                             ArrayAdapter foodadapter = (ArrayAdapter) foodView.getAdapter();
+
                                             for (final MultiBoxTracker.TrackedRecognition recognition : tracker.trackedObjects) {
                                                 set.add(recognition.title);
                                                 if (!foodStrings.contains(recognition.title)) {
@@ -331,10 +316,11 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
                                                 }
                                             }
                                             foodadapter.notifyDataSetChanged();
+                                            JsoupAsyncTask jsoupAsyncTask = new JsoupAsyncTask();
+                                            jsoupAsyncTask.execute();
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         }
-
 
                                         showCropInfo(cropCopyBitmap.getWidth() + "x" + cropCopyBitmap.getHeight());
                                         showInference(lastProcessingTimeMs + "ms");
@@ -347,6 +333,69 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
                 });
     }
 
+    //추천
+    private class JsoupAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                String urls = "https://www.10000recipe.com/recipe/list.html?q=";
+                String tail = "&query=&cat1=&cat2=&cat3=&cat4=&fct=&order=accuracy&lastcate=order&dsearch=&copyshot=&scrap=&degree=&portion=&time=&niresource=";
+                String one_tail = "&query=&cat1=&cat2=&cat3=&cat4=&fct=&order=reco&lastcate=order&dsearch=&copyshot=&scrap=&degree=&portion=&time=&niresource=";
+                if (foodStrings.size() == 1) {
+                    urls += foodStrings.get(0);
+                    String food_one_url = urls + one_tail;
+                    Document doc = Jsoup.connect(food_one_url).get();
+                    Elements title = doc.select(".rcp_m_list2").select(".common_sp_list_li").select(".common_sp_caption").select(".common_sp_caption_tit");
+                    link = doc.select(".rcp_m_list2").select(".common_sp_list_li").select("div[class=common_sp_thumb] a").attr("href");
+                    htmlContentInStringFormat = title.get(0).text();
+                }
+                else if (foodStrings.size() != 0){
+                    for (int i = 0; i < foodStrings.size(); i++) {
+                        urls += foodStrings.get(i);
+                        if (i + 1 == foodStrings.size()) {
+                            continue;
+                        } else
+                            urls += "+";
+                    }
+
+                    String food_url = urls + tail;
+                    Document doc = Jsoup.connect(food_url).get();
+                    Elements title = doc.select(".rcp_m_list2").select(".common_sp_list_li").select(".common_sp_caption").select(".common_sp_caption_tit");
+                    link = doc.select(".rcp_m_list2").select(".common_sp_list_li").select("div[class=common_sp_thumb] a").attr("href");
+                    htmlContentInStringFormat = title.get(0).text();
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            textView.setText("현재 추천 요리 : "+ htmlContentInStringFormat);
+        }
+    }
+
+    public void onButton2Clicked(View view) {
+        String urls = "https://www.10000recipe.com/";
+        if (foodStrings.size() == 0) {
+            Toast.makeText(
+                    this,
+                    "음식을 먼저 인식시켜주세요",
+                    Toast.LENGTH_LONG)
+                    .show();
+        } else {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urls+link));
+            startActivity(intent);
+        }
+    }
 
 
     @Override
@@ -359,11 +408,11 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
         return DESIRED_PREVIEW_SIZE;
     }
 
-    // Which detection model to use: by default uses Tensorflow Object Detection API frozen
-    // checkpoints.
-    private enum DetectorMode {
-        TF_OD_API;
-    }
+// Which detection model to use: by default uses Tensorflow Object Detection API frozen
+// checkpoints.
+private enum DetectorMode {
+    TF_OD_API;
+}
 
     @Override
     protected void setUseNNAPI(final boolean isChecked) {
