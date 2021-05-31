@@ -1,56 +1,33 @@
 # ingredients-classification
-상명대학교 SW-PBL 프로젝트(식재료 분류모델)
 
-# 식재료 인식기반 레시피 추천 어플리케이션
-term project for SoftwareDesign <br />
-- email address : jms393497@gmail.com <br />
-- Demo Video : https://youtu.be/meTqQoW314o <br />
-- blog : https://popcorn16.tistory.com/ <br />
+
+# Yolov5를 이용한 식재료 객체탐지 모델
+상명대학교 SW-PBL 프로젝트 <br />
+- email address : opea5954@gmail.com <br />
+- Demo Video : https://youtu.be/o9u2amtgCto <br />
 
 ## Introduction
-This is an android application for audience who likes to watch movies in theaters.
-1. It shows box office ranking of korea independent and commercial films.
-2. It shows theaters around your current location.
-3. You can review the movie theater.
-4. You can check other people's reviews and manage own reviews.
+Yolov5와 Tensorflow Lite를 기반으로한 레시피 추천 어플리케이션
+1. Yolov5로 학습한 식재료 탐지 모델을 이용하여 실시간으로 식재료 탐지
+2. 현재까지 인식한 식재료 중 가장 연관성 높은 요리를 실시간으로 제공
+3. 연관성 높은 요리의 레시피를 볼 수 있는 사이트 링크 제공
 
 ## Development Environment
-- mysql @8.0.18
-- Apache2 Server
-- php
+- Google colaboratory
+- Yolov5
+- Tensorflow 1.15.2v
 - Android Studio @3.5.3
 
-## Application Version
-- minSdkVersion : 15
-- targetSdkVersion : 26
+## Usage
+yolov5 설치
+```bash
+!git clone https://github.com/zldrobit/yolov5.git
+```
 
-## APIs
-- open API of Korean Film Council (homepage : https://www.kobis.or.kr/kobisopenapi/homepg/main/main.do) <br />
-If you want to get box office ranking, sign up to this homepage and get own key. <br />
-- open API of NAVER (homepage : https://developers.naver.com/main/) <br />
-If you want to get Movie Poster, sign up to this homepage and get own key. <br />
-- google map <br />
-If you want to get locations of theaters, sign up to google cloud platform and get own key.
+requirements.txt 설치
+```bash
+%cd /content/yolov5/
+pip install -r requirements.txt
+```
 
-## Database table information
-database table backup file is in /server/backup.sql <br />
-mysql -u [account] -p [database] < backup.sql
 
-## screenshot
-<img src="/images/Screenshot_1.png" width="180px" height="320px" title="Login" alt="Login"></img>
-<img src="/images/Screenshot_2.png" width="180px" height="320px" title="SignUp" alt="SignUp"></img>
-<img src="/images/Screenshot_3.png" width="180px" height="320px" title="CommertialMovie" alt="CommertialMovie"></img>
-<img src="/images/Screenshot_4.png" width="180px" height="320px" title="IndependentMovie" alt="IndependentMovie"></img>
-<img src="/images/Screenshot_5.png" width="180px" height="320px" title="Theater" alt="Theater"></img>
-<img src="/images/Screenshot_6.png" width="180px" height="320px" title="Review" alt="Review"></img>
-<img src="/images/Screenshot_7.png" width="180px" height="320px" title="myReview" alt="myReview"></img>
-
-## Final Presentation PPT
-<img src="/images/finalPT_1.png" width="360px" height="270px" title="finalPPT" alt="finalPPT"></img>
-<img src="/images/finalPT_2.png" width="360px" height="270px" title="finalPPT" alt="finalPPT"></img>
-<img src="/images/finalPT_3.png" width="360px" height="270px" title="finalPPT" alt="finalPPT"></img>
-<img src="/images/finalPT_4.png" width="360px" height="270px" title="finalPPT" alt="finalPPT"></img>
-<img src="/images/finalPT_5.png" width="360px" height="270px" title="finalPPT" alt="finalPPT"></img>
-
-## License
-MoveItMovie is released under the MIT License. http://www.opensource.org/licenses/mit-license
