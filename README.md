@@ -48,11 +48,28 @@ pip install -r requirements.txt
 !python train.py --img 416 --batch 16 --epochs 300 --data /content/data.yaml --cfg ./models/yolov5s.yaml --weights yolov5s.pt --name food_ingredients_model
 ```
 
+4. https://github.com/zldrobit/yolov5 이동
+ models/tf.py 파일을 colab의 /content/models/ 디렉터리에 저장
+ 
+5. 학습된 가중치 파일(.pt)를 .tflite로 변환
+```bash
+!PYTHONPATH=. python models/tf.py --weights runs/train/food_ingredients_model/weights/best.pt --cfg models/yolov5s.yaml --img 320
+```
+
+## Android 연동
+1. yolov5 app 변경
+yolov5의 app의 내용을 
+https://github.com/Q-100/ingredients-classification.git 로 변경
+
+2. assets에 Model Training에서 학습한 best-fp16.tflite 파일 저장
+또는 
 weight(.tflite) 
-https://drive.google.com/file/d/1lvwR8SvFC8moYsfMrxvUV1SeIQBPFx1L/view?usp=sharing
+https://drive.google.com/file/d/1lvwR8SvFC8moYsfMrxvUV1SeIQBPFx1L/view?usp=sharing 저장
 
-4. https://github.com/zldrobit/yolov5에 가서 models/tf.py 파일을 colab의 models/ 디렉터리에 저장
+3. 실행 ^^
 
+## 코드설명
+DetectorActivity.java
 
 
 
