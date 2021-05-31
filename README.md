@@ -2,7 +2,8 @@
 상명대학교 SW-PBL 프로젝트 <br />
 - email address : opea5954@gmail.com <br />
 - Demo Video : https://youtu.be/o9u2amtgCto <br />
-![image](https://user-images.githubusercontent.com/68915940/120200196-06ff2c00-c25f-11eb-87b8-62c5639d7649.png)
+![그림1ㅁ](https://user-images.githubusercontent.com/68915940/120201373-54c86400-c260-11eb-8744-097ad36996b1.png)
+<!--![image](https://user-images.githubusercontent.com/68915940/120200196-06ff2c00-c25f-11eb-87b8-62c5639d7649.png)-->
 ![image](https://user-images.githubusercontent.com/68915940/120200207-09618600-c25f-11eb-903f-284e85cecf99.png)
 ![image](https://user-images.githubusercontent.com/68915940/120200219-0b2b4980-c25f-11eb-8dc0-6fb6f2c3a34e.png)
 
