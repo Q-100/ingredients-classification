@@ -23,6 +23,8 @@ Yolov5와 Tensorflow Lite를 기반으로한 레시피 추천 어플리케이션
     - 마늘, 감자, 달걀, 양파, 닭고기, 돼지고기, 대파, 소고기, 김치, 햄, 콩나물
     
 ![image](https://user-images.githubusercontent.com/68915940/120200231-0e263a00-c25f-11eb-8b11-cf887a5f492e.png)
+
+
 2. Images : 905
 3. TRAIN/TEST SPLIT(100%) 
     - Train : 631(70%)
