@@ -96,7 +96,6 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     private BorderedText borderedText;
     public static Set<String> set = new HashSet<>();
 
-    private String htmlPageUrl = "https://www.daum.net/";
     private String htmlContentInStringFormat;
     String link;
 
@@ -354,6 +353,21 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
                     Elements title = doc.select(".rcp_m_list2").select(".common_sp_list_li").select(".common_sp_caption").select(".common_sp_caption_tit");
                     link = doc.select(".rcp_m_list2").select(".common_sp_list_li").select("div[class=common_sp_thumb] a").attr("href");
                     htmlContentInStringFormat = title.get(0).text();
+                }
+                else if (foodStrings.size() == 2){
+                    for (int i = 0; i < foodStrings.size(); i++) {
+                        urls += foodStrings.get(i);
+                        if (i + 1 == foodStrings.size()) {
+                            continue;
+                        } else
+                            urls += "+";
+                    }
+                    String food_url = urls + tail;
+                    Document doc = Jsoup.connect(food_url).get();
+                    Elements title = doc.select(".rcp_m_list2").select(".common_sp_list_li").select(".common_sp_caption").select(".common_sp_caption_tit");
+                    link = doc.select(".rcp_m_list2").select(".common_sp_list_li").select("div[class=common_sp_thumb] a").attr("href");
+                    htmlContentInStringFormat = title.get(0).text();
+
                 }
                 else if (foodStrings.size() != 0){
                     for (int i = 0; i < foodStrings.size(); i++) {
